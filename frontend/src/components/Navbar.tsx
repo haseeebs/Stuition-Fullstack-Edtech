@@ -1,12 +1,15 @@
+import { Link } from "react-router-dom";
+import Button2 from "./Buttons/Button2";
+import Button3 from "./Buttons/Button3";
+
 const Navbar = () => {
   return (
-    <nav className="bg-secondary text-fifth p-4">
+    <nav className="bg-third text-fifth p-4">
       <div className="container mx-auto flex justify-between items-center">
-        <div className="text-4xl font-poppins font-bold">Stuition</div>
-        <div className="hidden md:flex space-x-6">
-            <a href="#section1" className="font-medium relative px-5 py-2 border border-black transition-transform duration-300 ease-out hover:translate-x-[-5px] hover:translate-y-[-5px] hover:shadow-[5px_5px_0_rgba(0,0,0,1)]">Section 1</a>
-            <a href="#section2" className="font-medium relative px-5 py-2 border border-black transition-transform duration-300 ease-out hover:translate-x-[-5px] hover:translate-y-[-5px] hover:shadow-[5px_5px_0_rgba(0,0,0,1)]">Section 2</a>
-            <a href="#section3" className="font-medium relative px-5 py-2 border border-black transition-transform duration-300 ease-out hover:translate-x-[-5px] hover:translate-y-[-5px] hover:shadow-[5px_5px_0_rgba(0,0,0,1)]">Section 3</a>
+        <Link to={'/'} className="hover-line text-4xl font-poppins font-bold text-purple-700">Stuition</Link>
+        <div className="hidden md:flex space-x-2">
+          <Button2 to="/login">Log In</Button2>
+          <Button3 to="/register">Sign Up</Button3>
         </div>
 
 

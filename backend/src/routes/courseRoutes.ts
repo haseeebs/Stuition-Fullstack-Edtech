@@ -2,7 +2,7 @@
 import { Router } from "express";
 
 // Middleware
-import { isInstructor, protect } from "middleware/authMiddleware";
+import { customRole, protect } from "middleware/authMiddleware";
 
 // Controllers
 import { createCourse, deleteCourse, getAllCourses, getCourse, updateCourse } from "controllers/courseController";
@@ -13,7 +13,7 @@ import upload from "controllers/uploadController";
 const router = Router();
 
 // Create a new course
-router.post("/", protect, isInstructor, upload.single('image'), createCourse);
+router.post("/", protect, customRole("instructor"), upload.single('image'), createCourse);
 
 // Get all courses
 router.get("/", protect, getAllCourses);
@@ -22,27 +22,27 @@ router.get("/", protect, getAllCourses);
 router.get("/:courseId", protect, getCourse);
 
 // Update course by ID
-router.put("/:courseId", protect, isInstructor, upload.single('image'), updateCourse);
+router.put("/:courseId", protect, customRole("instructor"), upload.single('image'), updateCourse);
 
 // Delete course by ID
-router.delete("/:courseId", protect, isInstructor, deleteCourse);
+router.delete("/:courseId", protect, customRole("instructor"), deleteCourse);
 
 // Create a new section under a specific course
-router.post("/:courseId/sections", protect, isInstructor, createSection);
+router.post("/:courseId/sections", protect, customRole("instructor"), createSection);
 
 // Update an existing section under a specific course
-router.put("/:courseId/sections/:sectionId", protect, isInstructor, updateSection);
+router.put("/:courseId/sections/:sectionId", protect, customRole("instructor"), updateSection);
 
 // Delete an existing section under a specific course
-router.delete("/:courseId/sections/:sectionId", protect, isInstructor, deleteSection);
+router.delete("/:courseId/sections/:sectionId", protect, customRole("instructor"), deleteSection);
 
 // Create a new subsection under a specific section
-router.post("/:courseId/sections/:sectionId/subsections", protect, isInstructor, upload.single('video'), createSubSection);
+router.post("/:courseId/sections/:sectionId/subsections", protect, customRole("instructor"), upload.single('video'), createSubSection);
 
 // Update an existing subsection under a specific section
-router.patch("/subsections/:subsectionId", protect, isInstructor, upload.single('video'), updateSubSection);
+router.patch("/subsections/:subsectionId", protect, customRole("instructor"), upload.single('video'), updateSubSection);
 
 // Delete an existing subsection under a specific section
-router.delete("/sections/:sectionId/subsections/:subsectionId", protect, isInstructor, deleteSubSection);
+router.delete("/sections/:sectionId/subsections/:subsectionId", protect, customRole("instructor"), deleteSubSection);
 
 export default router;

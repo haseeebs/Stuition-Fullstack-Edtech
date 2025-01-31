@@ -1,6 +1,6 @@
 // Node modules
 import { Router } from "express";
-import { isAdmin, protect } from "middleware/authMiddleware";
+import { customRole, protect } from "middleware/authMiddleware";
 
 // Controllers
 import { resetPassword, resetPasswordToken } from "controllers/resetPasswordController";
@@ -27,9 +27,10 @@ router.post("/reset-password", resetPasswordToken);
 router.post("/reset-password/:token", resetPassword);
 
 // Send OTP for new account verification
-router.post("/verify-otp", sendOtp);
+router.post("/send-otp", sendOtp);
 
 // Delete user (protected route for admin)
-router.delete("/users/:id", protect, isAdmin, deleteUser);
+router.delete("/users/:id", protect, customRole("admin"), deleteUser);
 
+// Update user
 export default router;

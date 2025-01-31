@@ -19,10 +19,11 @@ import ExpressError from "utils/ExpressError";
 import mailSender from "utils/mailSender";
 import wrapAsync from "utils/wrapAsync";
 import generateToken from "utils/generateToken";
+import { startSession } from "mongoose";
 
 
 // Send otp for new account verification
-// Route: POST /api/v1/auth/verify-otp
+// Route: POST /api/v1/auth/send-otp
 // Access Public
 const sendOtp = wrapAsync(async (req: Request, res: Response, next: NextFunction) => {
   const { email } = req.body;
@@ -44,7 +45,8 @@ const sendOtp = wrapAsync(async (req: Request, res: Response, next: NextFunction
     specialChars: false,
   });
 
-  console.log(`OTP generated successfully: ${otp}`);
+  // Remove any existing OTP for this email
+  await OTP.deleteMany({ email });
 
   // Save OTP to the database
   const savingOtpToDb = await OTP.create({ email, otp });
@@ -66,51 +68,71 @@ const register = wrapAsync(
 
     const { firstName, lastName, email, password, accountType, otp: enteredOtp } = validatedData;
 
-    // Check if user already exists
     const existUser = await User.findOne({ email });
 
     if (existUser) {
       return next(new ExpressError(400, 'User with this email already exists'));
     }
 
-    const latestOTP = await OTP.findOne({ email }).sort({ createdAt: -1 });
+    const session = await startSession();
+    session.startTransaction();
+    try {
+      const latestOTP = await OTP.findOne({ email }).session(session);
 
-    if (!latestOTP || !(await latestOTP.verifyOtp(enteredOtp))) {
-      return next(new ExpressError(400, "Invalid or expired OTP"));
+      if (!latestOTP) {
+        return next(
+          new ExpressError(400, "No OTP found or the OTP has expired. Please request a new OTP.")
+        );
+      }
+
+      const isOtpValid = await latestOTP.verifyOtp(enteredOtp);
+      if (!isOtpValid) {
+        return next(new ExpressError(400, "Invalid OTP"));
+      }
+
+      // Create profile
+      const profile = await Profile.create(
+          {
+            user: null,
+            about: null,
+            dateOfBirth: null,
+            gender: null,
+            contactNumber: null,
+          },
+        { session }
+      );
+
+      // Create user
+      const newUser = await User.create(
+          {
+            firstName,
+            lastName,
+            email,
+            password,
+            accountType,
+            profile: profile[0]._id,
+            image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`,
+          },
+        { session }
+      );
+
+      // Update Profile with User Reference
+      await Profile.findByIdAndUpdate(profile[0]._id, { user: newUser[0]._id }, { session });
+
+      // Delete OTP
+      await OTP.deleteOne({ email }).session(session);
+
+      // Generate token
+      generateToken(res, newUser[0]._id as ObjectId);
+
+      res.status(200).json({ success: true, message: "User registered", newUser });
+    } catch (error) {
+      // Rollback on Error
+      await session.abortTransaction();
+      next( new ExpressError(500, "Registration failed. Transaction rolled back."));
+    } finally {
+      session.endSession();
     }
-
-    // Create profile
-    const profile = await Profile.create({
-      user: null,
-      about: null,
-      dateOfBirth: null,
-      gender: null,
-      contactNumber: null,
-    });
-
-    // Create user
-    const newUser = await User.create({
-      firstName,
-      lastName,
-      email,
-      password,
-      accountType,
-      profile: profile._id,
-      image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`,
-    });
-
-    // Update profile with user reference
-    profile.user = newUser._id as Schema.Types.ObjectId;
-    await profile.save();
-
-    // Generate token
-    generateToken(res, newUser._id as ObjectId);
-
-    return res.status(200).json({
-      success: true,
-      message: "User registered successfully",
-      newUser
-    });
   });
 
 
@@ -188,17 +210,30 @@ const changePassword = wrapAsync(async (req: Request<{}, {}, z.infer<typeof chan
   const isPasswordValid = await user.matchPasswords(oldPassword);
 
   if (!isPasswordValid) {
-    return next(new ExpressError(400, 'Old password is incorrect'));
+    return next(new ExpressError(400, 'Invalid credentials'));
   }
-
+  
+  // Check if new password is different from current
+  if (oldPassword === newPassword) {
+    return next(
+      new ExpressError(400, "New password must be different from the current password")
+    );
+  }  
+  
   // Assign the new password (this will trigger the 'pre-save' middleware)
   user.password = newPassword;
 
   const updatedUser = await user.save();
 
   // Send mail: To notify the user about the password change
-  mailSender(user.email, 'Password Changed', 'Your password was successfully changed.');
-
+  mailSender({
+    email: user.email,
+    subject: 'Password Changed',
+    body: `
+      Your password was successfully changed. If you did not make this change, please reset your password immediately or contact support.
+    `
+  });
+  
   res.status(200).json({
     success: true,
     message: 'Password updated successfully',
@@ -210,9 +245,17 @@ const changePassword = wrapAsync(async (req: Request<{}, {}, z.infer<typeof chan
   })
 });
 
+// Get users
+// Route: DELETE /api/v1/users
+// Access: Private/Admin
+const getUsers = wrapAsync(async (req: Request, res: Response, next: NextFunction) => {
+  const users = await User.find({});
+  res.status(200).json({users});
+});
+
 // Delete user
 // Route: DELETE /api/v1/users/:id
-// Access: Private
+// Access: Private/Admin
 const deleteUser = wrapAsync(
   async (req: Request, res: Response, next: NextFunction) => {
 
@@ -250,6 +293,6 @@ const deleteUser = wrapAsync(
     });
 
   }
-)
+);
 
-export { register, sendOtp, changePassword, login, logout, deleteUser };
+export { register, sendOtp, changePassword, login, logout, getUsers, deleteUser };
