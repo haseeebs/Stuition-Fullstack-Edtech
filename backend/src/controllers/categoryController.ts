@@ -2,16 +2,16 @@
 import { NextFunction, Request, Response } from "express";
 
 // Internal models
-import Category from "models/categoryModel";
-import Course from "models/courseModel";
-import UserActivity from "models/userActivity";
+import Category from "models/categoryModel.js";
+import Course from "models/courseModel.js";
+import UserActivity from "models/userActivity.js";
 
 // Schemas
-import { categorySchema, CategorySchemaType } from "schemas/categorySchema";
+import { categorySchema, CategorySchemaType } from "schemas/categorySchema.js";
 
 // Utilities
-import ExpressError from "utils/ExpressError";
-import wrapAsync from "utils/wrapAsync";
+import ExpressError from "utils/ExpressError.js";
+import wrapAsync from "utils/wrapAsync.js";
 
 
 // Create a new category

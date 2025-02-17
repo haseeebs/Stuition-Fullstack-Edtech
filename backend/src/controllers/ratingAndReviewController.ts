@@ -3,15 +3,15 @@ import { Schema } from "mongoose";
 import { NextFunction, Request, Response } from "express";
 
 // models
-import Course from "models/courseModel";
-import RatingAndReview from "models/ratingAndReviewModel";
+import Course from "models/courseModel.js";
+import RatingAndReview from "models/ratingAndReviewModel.js";
 
 // Schemas
-import { ratingAndReviewSchema, RatingAndReviewSchemaType } from "schemas/ratingAndReviewSchema";
+import { ratingAndReviewSchema, RatingAndReviewSchemaType } from "schemas/ratingAndReviewSchema.js";
 
 // Utilities
-import ExpressError from "utils/ExpressError";
-import wrapAsync from "utils/wrapAsync";
+import ExpressError from "utils/ExpressError.js";
+import wrapAsync from "utils/wrapAsync.js";
 
 
 // Create a new rating

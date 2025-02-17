@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import Jwt from "jsonwebtoken";
-import User, { IUser } from "models/userModels";
-import ExpressError from "utils/ExpressError";
-import wrapAsync from "utils/wrapAsync";
+import User, { IUser } from "models/userModels.js";
+import ExpressError from "utils/ExpressError.js";
+import wrapAsync from "utils/wrapAsync.js";
 
 interface JwtPayload {
     userId: string

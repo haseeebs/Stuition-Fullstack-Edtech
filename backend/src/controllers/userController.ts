@@ -5,20 +5,20 @@ import otpGenerator from "otp-generator";
 import { ObjectId, Schema } from "mongoose";
 
 // Internal models
-import OTP from "models/otpModel";
-import Profile from "models/profileModel";
-import User from "models/userModels";
-import Course from "models/courseModel";
-import CourseProgress from "models/courseProgressModel";
+import OTP from "models/otpModel.js";
+import Profile from "models/profileModel.js";
+import User from "models/userModels.js";
+import Course from "models/courseModel.js";
+import CourseProgress from "models/courseProgressModel.js";
 
 // Schemas
-import { changePasswordSchema, loginSchema, userSchema } from "../schemas/userSchema";
+import { changePasswordSchema, loginSchema, userSchema } from "../schemas/userSchema.js";
 
 // Utilities
-import ExpressError from "utils/ExpressError";
-import mailSender from "utils/mailSender";
-import wrapAsync from "utils/wrapAsync";
-import generateToken from "utils/generateToken";
+import ExpressError from "utils/ExpressError.js";
+import mailSender from "utils/mailSender.js";
+import wrapAsync from "utils/wrapAsync.js";
+import generateToken from "utils/generateToken.js";
 import { startSession } from "mongoose";
 
 

@@ -1,6 +1,6 @@
 import { model, Schema, Document } from "mongoose";
-import ExpressError from "utils/ExpressError";
-import mailSender from "utils/mailSender";
+import ExpressError from "utils/ExpressError.js";
+import mailSender from "utils/mailSender.js";
 
 // Define the OTP interface
 interface IOTP extends Document {

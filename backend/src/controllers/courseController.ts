@@ -2,22 +2,22 @@
 import { NextFunction, Request, Response } from "express";
 
 // Configurations
-import cloudinary from "config/cloudinaryConfig";
+import cloudinary from "config/cloudinaryConfig.js";
 
 // Internal models
-import Course from "models/courseModel";
-import RatingAndReview from "models/ratingAndReviewModel";
-import Section from "models/sectionModel";
-import SubSection from "models/subSectionModel";
-import User from "models/userModels";
+import Course from "models/courseModel.js";
+import RatingAndReview from "models/ratingAndReviewModel.js";
+import Section from "models/sectionModel.js";
+import SubSection from "models/subSectionModel.js";
+import User from "models/userModels.js";
 
 // Schemas
-import { courseSchema, CourseType } from "schemas/courseSchema";
+import { courseSchema, CourseType } from "schemas/courseSchema.js";
 
 // Utilities
-import ExpressError from "utils/ExpressError";
-import wrapAsync from "utils/wrapAsync";
-import UserActivity from "models/userActivity";
+import ExpressError from "utils/ExpressError.js";
+import wrapAsync from "utils/wrapAsync.js";
+import UserActivity from "models/userActivity.js";
 
 
 // Fetch a single course by ID

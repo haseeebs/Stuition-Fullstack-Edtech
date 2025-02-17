@@ -3,7 +3,7 @@ import { ZodError } from "zod";
 import { NextFunction, Request, Response } from "express";
 
 // Utilities
-import ExpressError from "utils/ExpressError";
+import ExpressError from "utils/ExpressError.js";
 
 // Middleware
 const errorHandlerMiddleware = (err: ExpressError, req: Request, res: Response, next: NextFunction) => {

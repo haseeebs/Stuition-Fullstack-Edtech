@@ -2,15 +2,15 @@
 import { NextFunction, Request, Response } from "express";
 
 // Internal Models
-import Profile from "models/profileModel";
-import User from "models/userModels";
+import Profile from "models/profileModel.js";
+import User from "models/userModels.js";
 
 // Schemas
-import { profileSchema, ProfileSchemaType } from "schemas/profileSchema";
+import { profileSchema, ProfileSchemaType } from "schemas/profileSchema.js";
 
 // Utilities
-import ExpressError from "utils/ExpressError";
-import wrapAsync from "utils/wrapAsync";
+import ExpressError from "utils/ExpressError.js";
+import wrapAsync from "utils/wrapAsync.js";
 
 // Update user profile by ID
 // Route: PUT /api/v1/profile/updateProfilePicture

@@ -3,7 +3,7 @@ import multer from "multer";
 import path from "path";
 
 // Utilities
-import ExpressError from "utils/ExpressError";
+import ExpressError from "utils/ExpressError.js";
 
 const __dirname = import.meta.dirname; // Get the directory name
 

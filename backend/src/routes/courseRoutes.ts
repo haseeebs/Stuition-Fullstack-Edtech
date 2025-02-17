@@ -2,13 +2,13 @@
 import { Router } from "express";
 
 // Middleware
-import { customRole, protect } from "middleware/authMiddleware";
+import { customRole, protect } from "middleware/authMiddleware.js";
 
 // Controllers
-import { createCourse, deleteCourse, getAllCourses, getCourse, updateCourse } from "controllers/courseController";
-import { createSection, deleteSection, updateSection } from "controllers/sectionController";
-import { createSubSection, deleteSubSection, updateSubSection } from "controllers/subSectionController";
-import upload from "controllers/uploadController";
+import { createCourse, deleteCourse, getAllCourses, getCourse, updateCourse } from "controllers/courseController.js";
+import { createSection, deleteSection, updateSection } from "controllers/sectionController.js";
+import { createSubSection, deleteSubSection, updateSubSection } from "controllers/subSectionController.js";
+import upload from "controllers/uploadController.js";
 
 const router = Router();
 

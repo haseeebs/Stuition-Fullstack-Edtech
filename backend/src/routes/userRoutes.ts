@@ -1,10 +1,10 @@
 // Node modules
 import { Router } from "express";
-import { customRole, protect } from "middleware/authMiddleware";
+import { customRole, protect } from "middleware/authMiddleware.js";
 
 // Controllers
-import { resetPassword, resetPasswordToken } from "controllers/resetPasswordController";
-import { changePassword, deleteUser, login, logout, register, sendOtp } from "controllers/userController";
+import { resetPassword, resetPasswordToken } from "controllers/resetPasswordController.js";
+import { register, sendOtp, login, logout, changePassword, deleteUser } from "controllers/userController.js";
 
 const router = Router();
 

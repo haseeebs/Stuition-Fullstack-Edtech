@@ -2,10 +2,10 @@
 import { Router } from "express";
 
 // Middleware
-import { protect, customRole } from "middleware/authMiddleware";
+import { protect, customRole } from "middleware/authMiddleware.js";
 
 // Controllers
-import { createCategory, categoryPageDetails } from "controllers/categoryController";
+import { createCategory, categoryPageDetails } from "controllers/categoryController.js";
 
 const router = Router();
 

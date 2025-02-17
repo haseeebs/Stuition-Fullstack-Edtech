@@ -1,5 +1,5 @@
 import { model, Schema, Document } from "mongoose";
-import RatingAndReview from "./ratingAndReviewModel";
+import RatingAndReview from "./ratingAndReviewModel.js";
 
 // Course interface
 export interface ICourse extends Document {

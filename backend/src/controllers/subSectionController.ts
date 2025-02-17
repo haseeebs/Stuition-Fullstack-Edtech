@@ -2,18 +2,18 @@
 import { NextFunction, Request, Response } from "express";
 
 // Configuration
-import cloudinary from "config/cloudinaryConfig";
+import cloudinary from "config/cloudinaryConfig.js";
 
 // Internal Models
-import Section from "models/sectionModel";
-import SubSection from "models/subSectionModel";
+import Section from "models/sectionModel.js";
+import SubSection from "models/subSectionModel.js";
 
 // Schemas
-import { SubsectionSchemaType, subSectionSchema } from "schemas/subSectionSchema";
+import { SubsectionSchemaType, subSectionSchema } from "schemas/subSectionSchema.js";
 
 // Utilities
-import ExpressError from "utils/ExpressError";
-import wrapAsync from "utils/wrapAsync";
+import ExpressError from "utils/ExpressError.js";
+import wrapAsync from "utils/wrapAsync.js";
 
 // Create a new subsection under a specific section
 // Route: POST /api/sections/:sectionId/subsections

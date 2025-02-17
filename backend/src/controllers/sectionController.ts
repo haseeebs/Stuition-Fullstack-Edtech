@@ -2,16 +2,16 @@
 import { NextFunction, Request, Response } from "express";
 
 // Internal Models
-import Course from "models/courseModel";
-import Section from "models/sectionModel";
-import SubSection from "models/subSectionModel";
+import Course from "models/courseModel.js";
+import Section from "models/sectionModel.js";
+import SubSection from "models/subSectionModel.js";
 
 // Schemas
-import { CreateSectionSchema, createSectionSchema, sectionParamsSchema, SectionParamsSchema, updateSectionParamsSchema } from "schemas/sectionSchema";
+import { CreateSectionSchema, createSectionSchema, sectionParamsSchema, SectionParamsSchema, updateSectionParamsSchema } from "schemas/sectionSchema.js";
 
 // Utilities
-import ExpressError from "utils/ExpressError";
-import wrapAsync from "utils/wrapAsync";
+import ExpressError from "utils/ExpressError.js";
+import wrapAsync from "utils/wrapAsync.js";
 
 // Create a new section under a specific course
 // Route: POST /api/courses/:courseId/sections

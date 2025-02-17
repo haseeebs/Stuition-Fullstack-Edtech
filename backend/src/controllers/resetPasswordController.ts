@@ -4,15 +4,15 @@ import { hash } from "bcrypt";
 import crypto from "crypto";
 
 // Internal Models
-import User from "models/userModels";
+import User from "models/userModels.js";
 
 // Templates
-import { passwordResetEmailBody } from "templates/emailTemplates";
+import { passwordResetEmailBody } from "templates/emailTemplates.js";
 
 // Utilities
-import ExpressError from "utils/ExpressError";
-import mailSender from "utils/mailSender";
-import wrapAsync from "utils/wrapAsync";
+import ExpressError from "utils/ExpressError.js";
+import mailSender from "utils/mailSender.js";
+import wrapAsync from "utils/wrapAsync.js";
 
 // Generate and send password reset token
 // POST /api/auth//reset-password

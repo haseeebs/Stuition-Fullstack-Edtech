@@ -5,21 +5,21 @@ import express from "express";
 import cookieParser from 'cookie-parser'
 
 // Middleware
-import errorHandlerMiddleware from "middleware/errorHandlerMiddleware";
+import errorHandlerMiddleware from "middleware/errorHandlerMiddleware.js";
 
 // Utilities
-import ExpressError from "utils/ExpressError";
+import ExpressError from "utils/ExpressError.js";
 
 // Configurations
-import connectDb from "./config/db";
-import corsOptions from "./config/cors";
+import connectDb from "./config/db.js";
+import corsOptions from "./config/cors.js";
 
 // Route handlers
-import userRoutes from './routes/userRoutes';
-import courseRoutes from './routes/courseRoutes';
-import profileRoutes from './routes/profileRoutes';
-import paymentRoutes from './routes/paymentRoutes';
-import categoryRoutes from './routes/categoryRoutes';
+import userRoutes from "./routes/userRoutes.js";
+import courseRoutes from "./routes/courseRoutes.js";
+import profileRoutes from "./routes/profileRoutes.js";
+import paymentRoutes from "./routes/paymentRoutes.js";
+import categoryRoutes from "./routes/categoryRoutes.js";
 
 const app = express();
 const PORT = process.env.PORT || 5000;

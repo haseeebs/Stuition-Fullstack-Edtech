@@ -2,11 +2,11 @@
 import { Router } from "express";
 
 // Middleware
-import { protect } from "middleware/authMiddleware";
+import { protect } from "middleware/authMiddleware.js";
 
 // Controllers
-import { updateProfile, updateProfilePicture } from "controllers/profileController";
-import upload from "controllers/uploadController";
+import { updateProfile, updateProfilePicture } from "controllers/profileController.js";
+import upload from "controllers/uploadController.js";
 
 const router = Router();
 
