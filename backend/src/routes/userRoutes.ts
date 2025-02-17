@@ -32,5 +32,6 @@ router.post("/send-otp", sendOtp);
 // Delete user (protected route for admin)
 router.delete("/users/:id", protect, customRole("admin"), deleteUser);
 
+// Get user details
 // Update user
 export default router;

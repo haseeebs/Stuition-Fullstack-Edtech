@@ -24,7 +24,7 @@ export interface IUser extends Document {
 const userSchema = new Schema<IUser>({
   firstName: { type: String, required: true, trim: true },
   lastName: { type: String, required: true, trim: true },
-  email: { type: String, required: true, unique: true, trim: true },
+  email: { type: String, required: true, lowercase: true, unique: true, trim: true },
   password: { type: String, required: true },
   isAdmin: { type: Boolean, required: true, default: false },
   accountType: { type: String, required: true, enum: [ "instructor", "student" ] },
@@ -55,18 +55,16 @@ userSchema.methods.generatePasswordResetToken = function () {
   return resetToken;
 };
 
-userSchema.pre('save', async function (next)  {
-    // If password is not modified, move to the next middleware
-    if (!this.isModified('password')) {
-      next();
-  }
+userSchema.pre("save", async function (next) {
+  // If password is not modified, move to the next middleware
+  if (!this.isModified("password")) return next();
 
   // Hash the password with the salt
   const salt = await genSalt(10);
   this.password = await hash(this.password, salt);
 
   next();
-})
+});
 
 const User = model<IUser>("User", userSchema);
 

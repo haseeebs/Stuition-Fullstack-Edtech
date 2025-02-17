@@ -12,6 +12,7 @@ import ExpressError from "utils/ExpressError";
 
 // Configurations
 import connectDb from "./config/db";
+import corsOptions from "./config/cors";
 
 // Route handlers
 import userRoutes from './routes/userRoutes';
@@ -26,10 +27,7 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json());
 app.use(cookieParser());
 
-app.use(cors({
-  origin: 'http://localhost:3000',
-  credentials: true,
-}));
+app.use(cors(corsOptions));
 
 // Connect to the database
 connectDb();
